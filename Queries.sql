@@ -28,6 +28,20 @@ select count(CITY) - count(DISTINCT CITY) from STATION;
 /*Query the two cities in STATION with the shortest and longest CITY names, as well as their respective lengths (i.e.: number of characters in the name). If there is more than one smallest or largest city, choose the one that comes first when ordered alphabetically.*/
 select CITY, length(CITY) from STATION order by length(CITY),CITY limit 1;
 select CITY, length(CITY) from STATION order by length(CITY) desc limit 1;
+/*SQL SERVER and only one final query*/
+declare @min bigint = (select min(len(city))from station)
+declare @max bigint = (select max(len(city))from station)
+
+select min(city)
+     , @min 
+  from station
+ where len(city) = @min
+union
+
+select min(city)
+     , @max
+  from station
+ where len(city) = @max;
 
 /*Query the list of CITY names starting with vowels (i.e., a, e, i, o, or u) from STATION. Your result cannot contain duplicates.*/
 select distinct CITY from STATION where substr(CITY,1,1)='a' OR substr(CITY,1,1)='e' OR substr(CITY,1,1)='i' OR substr(CITY,1,1)='o' OR substr(CITY,1,1)='u';
